@@ -11,14 +11,24 @@
 #define MTK_PRIVATE_IMPLEMENTATION
 #define CA_PRIVATE_IMPLEMENTATION
 
-#include <Metal/Metal.hpp>
-#include <AppKit/AppKit.hpp>
-#include <MetalKit/MetalKit.hpp>
+#include "config.h"
+#include "control/app_delegate.h"
 
 #include <iostream>
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    
+    //Start a new autorelease pool for memory management
+    NS::AutoreleasePool* autoreleasePool = NS::AutoreleasePool::alloc()->init();
+    
+    //Delegate added to the app as means to extend its behaviour
+    AppDelegate controller;
+    
+    NS::Application* app = NS::Application::sharedApplication();
+    app->setDelegate(&controller);
+    app->run();
+    
+    autoreleasePool->release();
+    
     return 0;
 }
